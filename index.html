@@ -22,11 +22,10 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 28px;
-      background: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.4);
       border: none;
       cursor: pointer;
       padding: 10px 18px;
-      z-index: 10;
     }
     #prev { left: 10px; }
     #next { right: 10px; }
@@ -42,20 +41,20 @@
 <body>
 
 <button id="prev">⟨</button>
-<img id="slide" src="slides/1.jpeg">
+<img id="slide" src="./slides/1.jpg">
 <button id="next">⟩</button>
 <button id="fs">Fullscreen</button>
 
 <script>
   let current = 1;
   const total = 5;      // JUMLAH FOTO
-  const delay = 5000;   // AUTO SLIDE (ms) → 5000 = 5 detik
+  const delay = 5000;   // AUTO SLIDE (ms)
   let auto = true;
 
   const slide = document.getElementById("slide");
 
   function showSlide() {
-    slide.src = `slides/${current}.jpeg`;
+    slide.src = `./slides/${current}.jpg`;
   }
 
   function nextSlide() {
@@ -71,7 +70,7 @@
   document.getElementById("next").onclick = nextSlide;
   document.getElementById("prev").onclick = prevSlide;
 
-  // Keyboard support
+  // Keyboard
   document.addEventListener("keydown", e => {
     if (e.key === "ArrowRight") nextSlide();
     if (e.key === "ArrowLeft") prevSlide();
@@ -86,7 +85,6 @@
       document.exitFullscreen();
     }
   }
-
   document.getElementById("fs").onclick = toggleFullscreen;
 
   // Auto slide
