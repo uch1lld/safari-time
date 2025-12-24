@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>Safari Time</title>
@@ -11,17 +11,89 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
     img {
       max-width: 95%;
       max-height: 95%;
     }
+    button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      background: rgba(255,255,255,0.35);
+      border: none;
+      cursor: pointer;
+      padding: 10px 18px;
+      z-index: 10;
+    }
+    #prev { left: 10px; }
+    #next { right: 10px; }
+    #fs {
+      top: 10px;
+      right: 10px;
+      transform: none;
+      font-size: 14px;
+      padding: 6px 10px;
+    }
   </style>
 </head>
 <body>
 
-<img src="slides/1.jpg">
+<button id="prev">⟨</button>
+<img id="slide" src="slides/1.jpeg">
+<button id="next">⟩</button>
+<button id="fs">Fullscreen</button>
+
+<script>
+  let current = 1;
+  const total = 5;      // JUMLAH FOTO
+  const delay = 5000;   // AUTO SLIDE (ms) → 5000 = 5 detik
+  let auto = true;
+
+  const slide = document.getElementById("slide");
+
+  function showSlide() {
+    slide.src = `slides/${current}.jpeg`;
+  }
+
+  function nextSlide() {
+    current = current < total ? current + 1 : 1;
+    showSlide();
+  }
+
+  function prevSlide() {
+    current = current > 1 ? current - 1 : total;
+    showSlide();
+  }
+
+  document.getElementById("next").onclick = nextSlide;
+  document.getElementById("prev").onclick = prevSlide;
+
+  // Keyboard support
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight") nextSlide();
+    if (e.key === "ArrowLeft") prevSlide();
+    if (e.key === "f") toggleFullscreen();
+  });
+
+  // Fullscreen
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  document.getElementById("fs").onclick = toggleFullscreen;
+
+  // Auto slide
+  setInterval(() => {
+    if (auto) nextSlide();
+  }, delay);
+</script>
 
 </body>
 </html>
-
